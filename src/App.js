@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useReducer , useEffect} from "react";
 import DateCounter from "./components/DateCounter";
 import Header from "./Header";
-import { useEffect } from "react";
 
 const initialState = {
   questions: [],
@@ -13,15 +12,30 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "dataReceived":
+      return {
+        ...state,
+        questions: action.payload,
+        status: "ready",
+      };
+    case "error":
+      return {
+        ...state,
+        status: "error",
+      };
+
+    default:
+      throw new Error("Action unknown");
   }
 }
 
 export default function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   useEffect(function () {
     fetch("http://localhost:9000/questions")
       .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch(err => console.error("Error"));
+      .then((data) => dispatch({type: "dataReceived", payload: data}))
+      .catch((err) => dispatch({type: "dataFailed"}));
   }, []);
 
   return (
