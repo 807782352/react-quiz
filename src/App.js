@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import DateCounter from "./components/DateCounter";
+import Header from "./Header";
+import { useEffect } from "react";
 
-function App() {
+const initialState = {
+  questions: [],
+
+  // 'loading', 'error', 'ready', 'active', 'finished'
+  status: "loading",
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "dataReceived":
+  }
+}
+
+export default function App() {
+  useEffect(function () {
+    fetch("http://localhost:9000/questions")
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch(err => console.error("Error"));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header />
+
+      <main className="main">
+        <p>1/15</p>
+        <p>Question?</p>
+      </main>
     </div>
   );
 }
-
-export default App;
