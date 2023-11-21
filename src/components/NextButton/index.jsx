@@ -1,12 +1,12 @@
 import React from "react";
 
 export default function NextButton({ dispatch, answer, index, numQuestions }) {
-  if (answer === null) return null;
-  
+  if (answer[index] === undefined) return null;
+
   if (index + 1 < numQuestions) {
     return (
       <button
-        className="btn btn-ui"
+        className="btn "
         onClick={() => dispatch({ type: "nextQuestion" })}
       >
         Next
@@ -16,10 +16,7 @@ export default function NextButton({ dispatch, answer, index, numQuestions }) {
 
   if (index + 1 === numQuestions) {
     return (
-      <button
-        className="btn btn-ui"
-        onClick={() => dispatch({ type: "finished" })}
-      >
+      <button className="btn " onClick={() => dispatch({ type: "finished" })}>
         Finished
       </button>
     );

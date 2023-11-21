@@ -10,7 +10,7 @@ export default function Progress({
   return (
     <header className="progress">
 
-    <progress max={numQuestions} value={index + (answer !== null)} /> 
+    <progress max={numQuestions} value={index + (answer[index] !== null)} /> 
 
       <p>
         Question <strong>{index + 1}</strong> / {numQuestions}

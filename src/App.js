@@ -10,6 +10,7 @@ import Progress from "./components/Progress";
 import FinishScreen from "./components/FinishScreen";
 import Footer from "./components/Footer";
 import Timer from "./components/Timer";
+import PrevButton from "./components/PrevButton";
 
 const SEC_PER_QUES = 30;
 
@@ -23,7 +24,7 @@ const initialState = {
   index: 0,
 
   // user's answer
-  answer: null,
+  answer: [],
 
   // user's acc points
   points: 0,
@@ -58,7 +59,7 @@ function reducer(state, action) {
 
       return {
         ...state,
-        answer: action.payload,
+        answer: [...state.answer, action.payload],
         points:
           action.payload === question.correctOption
             ? state.points + question.points
@@ -68,7 +69,12 @@ function reducer(state, action) {
       return {
         ...state,
         index: state.index + 1,
-        answer: null,
+      };
+
+    case "prevQuestion":
+      return {
+        ...state,
+        index: state.index - 1 <= 0 ? 0 : state.index - 1,
       };
 
     case "finished":
@@ -104,6 +110,8 @@ export default function App() {
     { questions, status, index, answer, points, highScore, secondsRemaining },
     dispatch,
   ] = useReducer(reducer, initialState);
+
+  // console.log(answer[index]);
 
   const numQuestions = questions.length;
   const maxPossiblePoints = questions.reduce(
@@ -142,15 +150,25 @@ export default function App() {
               dispatch={dispatch}
               answer={answer}
               points={points}
+              index={index}
             />
             <Footer>
               <Timer dispatch={dispatch} secondsRemaining={secondsRemaining} />
-              <NextButton
-                dispatch={dispatch}
-                answer={answer}
-                index={index}
-                numQuestions={numQuestions}
-              />
+
+              <div className="btns">
+                <PrevButton
+                  dispatch={dispatch}
+                  index={index}
+                  numQuestions={numQuestions}
+                />
+
+                <NextButton
+                  dispatch={dispatch}
+                  answer={answer}
+                  index={index}
+                  numQuestions={numQuestions}
+                />
+              </div>
             </Footer>
           </>
         )}

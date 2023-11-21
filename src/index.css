@@ -144,6 +144,13 @@ progress {
   float: right;
 }
 
+.btns {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
 .options {
   display: flex;
   flex-direction: column;
