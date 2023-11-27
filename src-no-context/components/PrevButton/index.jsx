@@ -1,8 +1,6 @@
 import React from "react";
-import { useQuizs } from "../../context/QuizContext";
 
-export default function PrevButton() {
-  const { dispatch, index, numQuestions } = useQuizs();
+export default function PrevButton({dispatch, index, numQuestions}) {
 
   if (index <= 0) return null;
 
