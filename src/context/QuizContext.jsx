@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 
+import data from "../data/questions.json";
+
 const SEC_PER_QUES = 30;
 
 const initialState = {
@@ -107,11 +109,18 @@ function QuizProvider({ children }) {
     0
   );
 
+
+  /* mocks API from backend */
+  // useEffect(function () {
+  //   fetch("http://localhost:9000/questions")
+  //     .then((res) => res.json())
+  //     .then((data) => dispatch({ type: "dataReceived", payload: data }))
+  //     .catch((err) => dispatch({ type: "dataFailed" }));
+  // }, []);
+
+  
   useEffect(function () {
-    fetch("http://localhost:9000/questions")
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
-      .catch((err) => dispatch({ type: "dataFailed" }));
+    dispatch({ type: "dataReceived", payload: data.questions });
   }, []);
 
   return (
